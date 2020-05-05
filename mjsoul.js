@@ -118,11 +118,15 @@ class MJSoulClient {
   //--------------------------------------------------------------------------
   
   processHanchan(uuid, channel) {
+    if (!fs.existsSync('./logs')) {
+      fs.mkdirSync('./logs');
+    }
+
     if (fs.existsSync('./logs/' + uuid + '.json')) {
       channel.send('Game already parsed.');
       return;
     }
-  
+
     this.mjsoul.send(
       'fetchGameRecord',
       { game_uuid: uuid },
