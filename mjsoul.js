@@ -9,6 +9,7 @@ const MJSoul = require("mjsoul");
 
 const DiscordClient = require("./discord");
 const config = require("./config");
+const parser = require("./parser");
 
 //=============================================================================
 // ** MJsoulClient
