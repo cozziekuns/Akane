@@ -39,6 +39,9 @@ class DiscordClient {
     const body = message.content.split(' ');
   
     switch (body[0]) {
+      case '!bot_ping':
+        this.sendPing(message.channel);
+        break;
       case '!game_list':
         this.processFetchGameList(body, message.channel);
         break;
@@ -54,12 +57,16 @@ class DiscordClient {
   // * Event Logic
   //---------------------------------------------------------------------------
 
+  sendPing(channel) {
+    channel.send('Pong!');
+  }
+
   processFetchGameList(body, channel) {
     const recentGames = (body[1] ? body[1] : 5);
   
     this.mjsoul.send(
       'fetchCustomizedContestGameRecords',
-      { unique_id: tournamentId },
+      { unique_id: config.tournamentId },
       data => { 
         data.record_list.slice(0, recentGames).forEach(game => {
           const usernames = game.accounts.map(account => account.nickname);

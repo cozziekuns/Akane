@@ -36,12 +36,16 @@ class MJSoulClient {
     this.mjsoul.open(this.onOpen.bind(this));
   }
 
+  send(name, payload, callback) {
+    this.mjsoul.send(name, payload, callback);
+  }
+
   //--------------------------------------------------------------------------
   // * Login and Authentication Logic
   //--------------------------------------------------------------------------
 
   onOpen() {
-    this.mjsoul.send(
+    this.send(
       'oauth2Auth', 
       { type: 10, code: config.oauthToken, uid: config.userId },
       this.onConnect.bind(this),
@@ -51,7 +55,7 @@ class MJSoulClient {
   onConnect(data) {
     const accessToken = data['access_token'];
   
-    this.mjsoul.send(
+    this.send(
       'oauth2Login',
       { 
         type: 10,
@@ -74,14 +78,16 @@ class MJSoulClient {
   onLogin(data) {
     console.log(data);
   
-    this.mjsoul.send('loginBeat', { contract: uuidv1() }, () => { 
-      this.mjsoul.send('heatbeat', { no_operation_counter: 0 }, () => {
+    this.send('loginBeat', { contract: uuidv1() }, () => { 
+      this.send('heatbeat', { no_operation_counter: 0 }, () => {
 
-        this.mjsoul.send(
+        this.send(
           'enterCustomizedContest', 
           { unique_id: config.tournamentId }, 
-          () => {
-            this.mjsoul.send(
+          (data) => {
+            console.log(data);
+
+            this.send(
               'joinCustomizedContestChatRoom',
               { unique_id: config.tournamentId },
             );
@@ -127,7 +133,7 @@ class MJSoulClient {
       return;
     }
 
-    this.mjsoul.send(
+    this.send(
       'fetchGameRecord',
       { game_uuid: uuid },
       data => {
@@ -169,10 +175,10 @@ class MJSoulClient {
   //--------------------------------------------------------------------------
 
   sendPing() {
-    this.mjsoul.send(
+    this.send(
       'heatbeat',
       { no_operation_counter: 0 }, 
-      data => console.log(data),
+      () => console.log('Majsoul Ping!'),
     );
   }
 
