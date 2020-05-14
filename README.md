@@ -28,6 +28,7 @@ Then, enter the last 6 values (in this case, ``08b417``) into the hex textbox of
 
 ## Bot Commands  
 
+ - ``!bot_ping``: Healthcheck you can use to make sure that the bot is connected to discord.
  - ``!game_list X``: Fetches the UUIDs of the last X games. If X is empty, the default value of UUIDs fetched is 5.
  - ``!parse_hanchan UUID``: Parses the hanchan with that UUID, and saves the parsed JSON into the logs directory.
 
