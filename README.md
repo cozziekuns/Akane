@@ -24,7 +24,9 @@ Then, enter the last 6 values (in this case, ``08b417``) into the hex textbox of
 
 7. Rename ``config.secret.js`` to ``config.js``
 
-8. Run ``node main.js`` in your favourite terminal.
+8. \[NEW\]: Replace the ``liqi.json`` file in the ``node_modules/mjsoul`` directory with the ``liqi.json`` file in the main directory. 
+
+9. Run ``node main.js`` in your favourite terminal.
 
 ## Bot Commands  
 
