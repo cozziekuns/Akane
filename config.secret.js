@@ -2,7 +2,7 @@
 // ** Config
 //=============================================================================
 
-const mjsoulUrl = 'wss://mjusgs.mahjongsoul.com:4501';
+const mjsoulUrl = 'wss://mjusgs.mahjongsoul.com:9663';
 
 const tournamentId = 0;
 const userId = '';

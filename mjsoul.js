@@ -11,6 +11,8 @@ const DiscordClient = require("./discord");
 const config = require("./config");
 const parser = require("./parser");
 
+let mjAccessToken = null;
+
 //=============================================================================
 // ** MJsoulClient
 //=============================================================================
@@ -53,29 +55,47 @@ class MJSoulClient {
     );
   };
 
-  onConnect(data) {
-    const accessToken = data['access_token'];
+  onConnect = (data) => {
+    mjAccessToken = data['access_token'];
   
     this.send(
+      'oauth2Check',
+      { type: 10, access_token: mjAccessToken },
+      this.onAuthCheckComplete.bind(this),
+    );
+  
+  };
+  
+  onAuthCheckComplete = () => {
+    this.send(
       'oauth2Login',
-      { 
+      {
         type: 10,
-        access_token: accessToken,
+        access_token: mjAccessToken,
         reconnect: false,
         device: {
-          device_type: 'pc',
-          os: '',
-          os_version: '',
-          browser: 'windows',
+          platform: 'pc',
+          hardware: 'pc',
+          os: 'windows',
+          os_version: 'win10',
+          is_browser: true,
+          software: 'Chrome',
+          sale_platform: 'web',
+          hardware_vendor: '',
+          model_number: '',
         },
         random_key: uuidv1(),
-        client_version: '0.6.252',
+        client_version: {
+          resource: '0.8.137.w',
+          package: '',
+        },
+        gen_access_token: false,
         currency_platforms: 2,
       },
       this.onLogin.bind(this),
     );
-  }
-  
+  };
+
   onLogin(data) {
     console.log(data);
   
